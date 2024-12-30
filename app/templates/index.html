@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="static/js/utils.js"></script>
+    <title>Aplikasi Numerik - Metode Jacobi</title>
+    <style>
+        body {visibility: hidden;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div id="form-section">
+            <img id="form-background" src="static/img/form-bg.png" draggable="false" />
+            <div id="burger">
+                <img src="static/svg/burger.svg" alt="tombol burger" />
+            </div>
+            <form id="form" method="POST">
+                <div class="input-overlay">
+                    <input id="eq-1" name="eq-1" class="input-field" />
+                </div>
+                <div class="input-overlay">
+                    <input id="eq-2" name="eq-2" class="input-field" />
+                </div>
+                <div class="input-overlay">
+                    <input id="eq-3" name="eq-3" class="input-field" />
+                </div>
+            </form>
+            <div id="form-title">
+                <img id="form-title-img" src="static/img/form-title.png" draggable="false" />
+                <img class="line-art" src="static/svg/line-art-1.svg" draggable="false" />
+                <img class="line-art" src="static/svg/line-art-2.svg" draggable="false" />
+                <button id="submit-btn">
+                    <img class="btn-img hidden" id="glow-fx" src="static/svg/btn-color-glow.svg">
+                    <img class="btn-img" id="normal-fx" src="static/svg/btn-color.svg" />
+                    <img class="btn-icon" src="static/svg/btn-icon.svg" />
+                </button>
+            </div>
+        </div>
+
+        <div id="result-section">
+            <!-- <div id="process-modal">
+                <div class="wrapper">
+                    <img src="static/img/form-title.png" />
+                </div>
+            </div> -->
+        </div>
+        
+    </div>
+
+    <script>
+        const Link = new Links(['main', 'index']);
+
+        const form = document.getElementById('form');
+        const submitBtn = document.getElementById('submit-btn');
+        const isBtnHovered = function(state) {
+            return state ? document.getElementById('glow-fx') : document.getElementById('normal-fx');
+        }
+        
+        submitBtn.addEventListener('mouseover', function() {
+            isBtnHovered(true).classList.remove('hidden');
+            isBtnHovered(false).classList.add('hidden');
+        });
+        submitBtn.addEventListener('mouseout', function() {
+            isBtnHovered(true).classList.add('hidden');
+            isBtnHovered(false).classList.remove('hidden');
+        });
+        submitBtn.addEventListener('click', () => {
+            form.requestSubmit();
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const inputEq1 = document.getElementById('eq-1').value;
+            const inputEq2 = document.getElementById('eq-2').value;
+            const inputEq3 = document.getElementById('eq-3').value;
+
+            const url = '/api/calculate';
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({eq1: inputEq1, eq2: inputEq2,eq3: inputEq3})
+            })
+            .then(response => response.json())
+            .then(results => {
+                const resultContainer = document.getElementById('result-section');
+                resultContainer.innerHTML = "";
+                const table = Object.assign(document.createElement('table'), { id: 'table-results' });
+                const thead = Object.assign(document.createElement('thead'), { id: 'table-heading' });
+                const tbody = Object.assign(document.createElement('tbody'), { id: 'table-content' });                
+                
+                const tr = document.createElement('tr');
+                tr.append(
+                    Object.assign(document.createElement('th'), { innerHTML: 'n' }),
+                    Object.assign(document.createElement('th'), { innerHTML: 'X' }),
+                    Object.assign(document.createElement('th'), { innerHTML: 'Y' }),
+                    Object.assign(document.createElement('th'), { innerHTML: 'Z' }),
+                    Object.assign(document.createElement('th'), { innerHTML: '&epsilon;(X)' }),
+                    Object.assign(document.createElement('th'), { innerHTML: '&epsilon;(Y)' }),
+                    Object.assign(document.createElement('th'), { innerHTML: '&epsilon;(Z)' }),
+                )
+                table.appendChild(tr);
+
+                for (const [idx, nth] of results.entries()) {
+                    const row = document.createElement('tr');
+                    for (const col of nth) {
+                        row.appendChild(Object.assign(document.createElement('td'), { innerHTML: `${col}` }));
+                    }
+                    // const detail = Object.assign(document.createElement('td'), { className: `detail-proses ${idx}`, innerHTML: 'Lihat' });
+                    // row.appendChild(detail);
+                    tbody.append(row);
+                }
+                table.append(thead, tbody);
+                resultContainer.appendChild(table);
+            });
+        });
+
+    </script>
+</body>
+</html>

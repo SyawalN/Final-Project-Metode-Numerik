@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="static/js/utils.js"></script>
+    <title>Jacobi Solver - Main</title>
+</head>
+<body>
+    <div id="header">
+        <h1>Aplikasi Metode Jacobi</h1>
+    </div>
+    <div id="container">
+        <h2>Input Persamaan Linear <span id="equation-info">3 Koefisien</span></h2>
+        <form id="equation-form" action="/calculate" method="POST">
+            <label aria-labelledby="equation-1" class="equation-label-input">
+                Persamaan 1
+                <input type="text" name="equation-1">
+            </label>
+            <label aria-labelledby="equation-2" class="equation-label-input">
+                Persamaan 2
+                <input type="text" name="equation-2">
+            </label>
+            <label aria-labelledby="equation-3" class="equation-label-input">
+                Persamaan 3
+                <input type="text" name="equation-3">
+            </label>
+            <div id="equation-button">
+                <button id="add-equation" type="button">Tambahkan persamaan baru</button>
+                <button id="remove-equation" type="button">Hapus persamaan baru</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const Link = new Links(['main', 'index']);
+
+        let lastAdded = [];
+        let equationCount = 3;
+        function removeLastAdded() {
+            if (lastAdded.length <= 0) return;
+            lastAdded[lastAdded.length-1].remove();
+            lastAdded.pop();
+            equationCount--;
+        }
+
+        const form = document.getElementById('equation-form');
+        const addEquationBtn = document.getElementById('add-equation');
+        const remEquationBtn = document.getElementById('remove-equation');
+        addEquationBtn.addEventListener('click', function() {
+            const element = document.createElement('label');
+            element.innerHTML = `Persamaan ${equationCount+1}`
+            element.classList.add('equation-label-input');
+            element.append(Object.assign(document.createElement('input'), { type: 'text' }));
+            
+            lastAdded.push(element);
+            equationCount++;
+
+            const targetPosition = document.getElementById('equation-button');
+            targetPosition.insertAdjacentElement('beforebegin', element);
+        });
+        remEquationBtn.addEventListener('click', removeLastAdded);
+    </script>
+</body>
+</html>

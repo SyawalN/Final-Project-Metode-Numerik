@@ -1,0 +1,12 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    color: white;
+    background-color: rgba(226, 123, 13, 1);
+    position: relative;
+}

@@ -1,0 +1,68 @@
+#header {
+    width: 100%;
+    height: 10%;
+    color: white;
+    font-size: 2vh;
+    background-color: #213555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px rgb(0, 0, 0, 0.7);
+}
+
+#container {
+    padding: 1.5rem;
+    height: 90%;
+    /* border: solid greenyellow; */
+}
+#container > h2 {
+    display: flex;
+    gap: 8px;
+}
+#container > h2 > #equation-info {
+    font-size: 0.875rem;
+    font-family: monospace;
+    font-weight: normal;
+}
+
+#equation-form {
+    height: auto;
+    /* border: solid salmon; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem 12px;
+}
+.equation-label-input {
+    width: calc((100% - 24px) / 3);
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+.equation-label-input > input {
+    margin-top: 0.5rem;
+    height: 2rem;
+    background-color: #F5EFE7;
+    border: none;
+    border-radius: 6px;
+}
+#equation-button {
+    width: calc((100% - 24px) / 3);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+#add-equation, #remove-equation {
+    width: 100%;
+    height: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    letter-spacing: 0.125rem;
+    border: none;
+    border-radius: 6px;
+    transition: background-color .5s;
+    cursor: pointer;
+}
+#add-equation:hover, #remove-equation:hover {
+    background-color: #d0d0d0;
+}
