@@ -67,6 +67,7 @@ input:-webkit-autofill:active{
     position: absolute;
     top: 2%;
     right: 2%;
+    user-select: none;
 }
 #form-section > #burger img {
     width: 100%;
