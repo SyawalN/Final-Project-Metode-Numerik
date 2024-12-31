@@ -43,12 +43,9 @@ def round_based_tolerance(x, tolerance):
     str_x = str(tolerance)
     if '.' in str_x:
         decimal_part = str_x.split('.')[1]
-        number_of_digit = len(decimal_part) - 1
-
-        if (number_of_digit < 0):
-            return np.round(x, 0)
+        number_of_digit = len(decimal_part)
         
-        return np.round(x, number_of_digit)
+        return np.where((number_of_digit > 0) and (x > tolerance), np.round(x, number_of_digit), np.round(x, 0))
     else:
         return np.round(x, 0)
 
