@@ -16,11 +16,11 @@ def calculate():
         try:
             # Parsing persamaan menjadi A dan b
             A, b = parse_equations(equations)
-            print(f"A: {A}\nB: {b}")
+            # print(f"A: {A}\nB: {b}")
 
             # Parameter metode Jacobi
             x0 = np.zeros_like(b)  # Tebakan awal
-            tolerance = 1e-2  # Toleransi
+            tolerance = 0.05  # Toleransi
             max_iterations = 50  # Iterasi maksimum
 
             # Menyelesaikan dengan metode Jacobi
